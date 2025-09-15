@@ -1,0 +1,37 @@
+name: Build LaTeX Documents
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Build LaTeX documents
+        uses: AlaCodon/latexonfly@v1.5.1
+        with:
+          # Basic configuration
+          entry_tex: "main.tex"                                               # Your main LaTeX file
+          engine: "pdflatex"                                                  # LaTeX engine (pdflatex, xelatex, lualatex)
+          working_directory: "."                                              # Directory containing LaTeX files
+
+          # Release configuration
+          create_release: true                                                # Create GitHub releases
+          release_tag_prefix: "rel"                                           # Prefix for release tags
+          push_to_releases_branch: true                                       # Push PDFs to releases branch
+          releases_branch_name: "releases"                                    # Name of releases branch
+
+          # Advanced configuration
+          texlive_mirror: "https://mirror.math.princeton.edu/pub/CTAN/systems/texlive/tlnet"
+          texlive_scheme: "basic"                                             # TeX Live scheme (basic, minimal, full)
+          timeout_minutes: 30                                                 # Job timeout
+          artifact_name: "pdfs"                                               # Name for PDF artifacts
+          keep_build_artifacts: false                                         # Upload build logs for debugging
+          keep_build_deps: false                                              # Upload build deps for debugging
+          cache_key_suffix: ""
