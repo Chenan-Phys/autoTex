@@ -1,0 +1,100 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{natbib}
+
+\title{Probing the Short-Distance Structure of $T\overline{T}$ Deformed Theories with Neural Network Quantum Fields}
+\author{[Your Name/Group]}
+\date{August 31, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+
+The $T\overline{T}$ deformation of two-dimensional conformal field theories (CFTs) provides an analytically tractable window into the physics of non-conformal, interacting quantum field theories (QFTs). A key challenge is to understand the theory's short-distance structure, which is encoded in the Operator Product Expansion (OPE). In a deformed theory, the OPE coefficients become non-trivial functions of scale, known as Wilson coefficients. This proposal outlines a novel, non-perturbative method to compute these scale-dependent coefficients using the recently developed Neural Network CFT (NN-CFT) framework. We propose to first construct a 2D CFT using the NN-CFT methodology, then implement the $T\overline{T}$ deformation as a continuous flow on the network's parameter distribution, analogous to a normalizing flow. By calculating $n$-point correlation functions from this deformed distribution, we will extract the Wilson coefficients, providing the first constructive, non-perturbative calculation of the deformed OPE from a machine learning paradigm. This work will establish a powerful new computational tool for studying deformed QFTs and forge a direct link between renormalization group flows in physics and parameter flows in deep learning.
+
+\section{Motivation and Novelty}
+
+\subsection{Scientific Motivation}
+
+Conformal field theories describe the physics of systems at critical points, but most of the universe is not critical. Understanding how to move away from these idealized points is a central goal of theoretical physics. The $T\overline{T}$ deformation, first identified by \cite{Zamolodchikov2004}, is a unique ``irrelevant" deformation that breaks conformal symmetry while preserving the integrability of the underlying theory \cite{Smirnov2017, Cavaglia2016}. This provides an unprecedented theoretical laboratory for studying solvable, non-conformal QFTs.
+
+The effects of an irrelevant deformation are most pronounced at high energies, i.e., short distances. The fundamental language of short-distance physics in any QFT is the Operator Product Expansion (OPE). While the OPE in a CFT is characterized by constant coefficients, the $T\overline{T}$ deformation transforms these into scale-dependent Wilson coefficients, $C_{ijk}(|x-y|, \sigma)$. A non-perturbative calculation of these functions would offer a complete picture of the theory's modified operator algebra and UV structure. However, existing non-perturbative methods have significant practical limitations in directly computing these functions. Specifically:
+\begin{itemize}
+  \item \textbf{Perturbation Theory:} This approach is inherently limited to an expansion in a small deformation parameter $\sigma$. It cannot capture non-perturbative physics at strong coupling (large $\sigma$) and the calculation of higher-order terms becomes combinatorially and computationally prohibitive.
+  \item \textbf{Holography (AdS/CFT):} The holographic approach is powerful but restricted to a specific class of CFTs—namely, those with a simple, classical gravitational dual. For these theories, the deformation corresponds to a finite radial cutoff in the AdS bulk, but solving the required wave equations to extract correlator functions in this modified geometry remains a formidable technical challenge, especially for $n>3$$.
+  \item \textbf{Integrability:} While non-perturbative and exact, integrability-based methods directly provide the theory's \textbf{spectral data}—the energy spectrum and the S-matrix of asymptotic particles. To access local correlation functions (configurational data), one must use the \textbf{form factor program}. This reconstructs the correlator via a spectral decomposition (an infinite sum over all multi-particle states). This reconstruction presents a major practical barrier: the series is known to converge extremely poorly in the short-distance limit ($|x-y| \to 0$) required to analyze the OPE. The method is therefore computationally ill-suited for directly probing the Wilson coefficients.
+\end{itemize}
+A new, non-perturbative, and broadly applicable \textit{constructive} method is therefore needed.
+
+\subsection{Novelty of the Proposed Approach}
+
+This project introduces a completely new methodology to tackle this problem by leveraging the constructive power of the Neural Network CFT framework \cite{Halverson2024}. Unlike the reconstructive form factor program, the NN-CFT method is a \textbf{direct} computational approach for correlation functions. The novelty is threefold:
+\begin{enumerate}
+  \item \textbf{A New Computational Paradigm:} This will be the first application of a constructive neural network QFT framework to study a dynamically deformed field theory, moving beyond the construction of static fixed-point theories.
+  \item \textbf{Bridging QFT and ML Concepts:} We will operationalize a QFT deformation as a continuous, solvable flow on the parameter space of a neural network. This creates a concrete and computationally viable analogy between the Renormalization Group (RG) flow in physics and normalizing flows in machine learning.
+  \item \textbf{Direct, Non-Perturbative OPE Calculation:} The proposed method is inherently non-perturbative in the deformation parameter $\sigma$. It computes correlation functions via a direct configuration-space integral that is numerically stable at all distance scales, making it perfectly suited for extracting the full functional form of the Wilson coefficients.
+\end{enumerate}
+
+\section{Proposed Research Plan}
+
+The research is structured into three distinct phases, building from a known baseline to the final calculation of the deformed OPE.
+
+\subsection{Phase 1: Construction and Validation of the Undeformed 2D CFT}
+The first step is to establish a robust baseline by constructing a known 2D CFT, such as the free boson, within the NN-CFT framework.
+\begin{itemize}
+  \item \textbf{Objective:} To implement a 2D CFT and validate its two- and four-point correlation functions.
+  \item \textbf{Methodology:}
+    \begin{enumerate}
+      \item We will specialize the formalism of \cite{Halverson2024} to $D=2$. The fundamental field will be represented by a homogeneous neural network architecture, e.g., $\Phi(X) = (\Theta \cdot X)^{-\Delta}$, where $X$ is a coordinate in the $(2+2)$-dimensional embedding space.
+      \item An appropriate Lorentz-invariant probability distribution $P_0(\Theta)$ will be chosen for the network parameters $\Theta$ to define the undeformed theory (the theory at $\sigma=0$).
+      \item The two-point $\langle\phi(x_1)\phi(x_2)\rangle_0$ and four-point $\langle\phi(x_1)\phi(x_2)\phi(x_3)\phi(x_4)\rangle_0$ functions will be computed via Monte Carlo integration over $P_0(\Theta)$.
+    \end{enumerate}
+  \item \textbf{Validation:} The computed correlators will be compared against the exact, known results for the 2D free boson to ensure the correctness of the implementation.
+\end{itemize}
+
+\subsection{Phase 2: Implementing the $T\overline{T}$ Deformation as a Parameter Flow}
+This is the core innovative step of the proposal: defining and solving the flow equation for the network's parameter distribution.
+\begin{itemize}
+  \item \textbf{Objective:} To derive and numerically solve a differential equation that describes the evolution of the parameter distribution $P_\sigma(\Theta)$ with the deformation parameter $\sigma$.
+  \item \textbf{Methodology:}
+    \begin{enumerate}
+      \item \textbf{Define the $T\overline{T}$ Operator:} Within the NN framework, the stress-energy tensor operator, $\Phi_{T_{\mu\nu}}$, is the Noether current associated with spacetime translations. We will define its functional form by computing the response of network correlators to variations of the background metric. The composite $T\overline{T}$ operator is then constructed as its determinant: $\Phi_{T\bar{T}} = \det(\Phi_{T_{\mu\nu}})$.
+      \item \textbf{Formulate the Flow Equation:} The $T\overline{T}$ deformation is defined by the flow equation $dS/d\sigma = \int d^2x \, T\bar{T}(x)$, where $S$ is the action. We translate this into a flow for the log-probability of the parameter distribution:
+        \[
+          \frac{d}{d\sigma} \big(-\log P_\sigma(\Theta)\big) = \mathbb{E}_{\Theta' \sim P_\sigma} \left[ \int d^2x \, \Phi_{T\bar{T}}(x; \Theta') \right]
+        \]
+        This formulation is inspired by flow-based generative models used successfully in lattice QFT \cite{Albergo2019}.
+      \item \textbf{Solve the Flow:} This first-order differential equation for $P_\sigma(\Theta)$ will be solved numerically from the initial condition $P_0(\Theta)$ to a desired finite $\sigma$, yielding the parameter distribution for the deformed theory.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Phase 3: Calculation of Deformed Correlators and OPE Extraction}
+With the deformed distribution in hand, we can compute observables and extract the physical quantities of interest.
+\begin{itemize}
+  \item \textbf{Objective:} To compute the three-point function of the deformed theory and extract the scale-dependent Wilson coefficients.
+  \item \textbf{Methodology:}
+    \begin{enumerate}
+      \item \textbf{Compute Deformed Correlators:} Using the numerically obtained distribution $P_\sigma(\Theta)$, we will compute the two- and three-point correlation functions, $\langle \dots \rangle_\sigma$, via Monte Carlo integration.
+      \item \textbf{Extract Wilson Coefficients:} The OPE dictates the behavior of the three-point function as two operators approach each other, e.g., $|x_1-x_2| \to 0$:
+        \[
+          \langle \phi(x_1) \phi(x_2) \phi(x_3) \rangle_\sigma \approx \sum_k C_{12k}(|x_1-x_2|, \sigma) \langle \phi_k(x_2) \phi_3(x_3) \rangle_\sigma
+        \]
+        By computing the three-point function for a range of operator separations and dividing by the known two-point function of the descendant operator $\phi_k$, we can numerically determine the functional form of the Wilson coefficient $C_{12k}$ as a function of both separation distance and the deformation parameter $\sigma$.
+    \end{enumerate}
+\end{itemize}
+
+\section{Expected Outcomes and Impact}
+
+This research will provide a new, non-perturbative computational framework for studying deformed quantum field theories. The primary outcome will be the first-ever calculation of the scale-dependent OPE Wilson coefficients in a $T\overline{T}$ deformed theory from a constructive, first-principles machine learning method. This will provide crucial data on the short-distance physics of these important solvable models.
+
+The broader impact will be to significantly expand the domain of applicability for neural network QFT methods, demonstrating their utility beyond the study of critical phenomena. This work will pioneer a path to modeling RG flows and deformed theories, opening up new possibilities for the non-perturbative study of a wide range of quantum systems.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
