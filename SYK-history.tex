@@ -1,0 +1,97 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% A simple and clean theme
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+% Remove the footline (bottom bars)
+\setbeamertemplate{footline}{}
+% Remove the navigation symbols 
+\setbeamertemplate{navigation symbols}{}
+
+\title{The SYK Model: From Spins to Fermions}
+\author{A Summary}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+% \frametitle{The SYK Model: A Brief History}
+\footnotesize % Use a smaller font for the entire frame content
+
+\begin{columns}[T] % The "T" option aligns the columns at the top
+
+% Column 1: Sachdev-Ye Spin Model
+\begin{column}{0.35\textwidth}
+    \centering
+    \textbf{Sachdev-Ye Model (1993)}
+    \vspace{0.2cm}
+    
+    \includegraphics[width=0.7\linewidth]{sachdev.jpg}
+    \vspace{0.3cm}
+
+    \textbf{Hamiltonian:}
+    $$ H = \sum_{i<j} J_{ij} \vec{S}_i \cdot \vec{S}_j $$
+    $\vec{S}_i$ are $SU(M)$ spins
+    
+    \vspace{0.3cm}
+    \textbf{Properties (Large $M$):}
+    \begin{itemize}
+        \item Gapless spin-fluid
+        \item Quantum critical point without quasiparticles.
+        \item Finite zero-temperature entropy
+    \end{itemize}
+\end{column}
+
+% Column 2: Kitaev's Majorana Version
+\begin{column}{0.35\textwidth}
+    \centering
+    \textbf{Majorana SYK (2015)}
+    \vspace{0.2cm}
+    
+    \includegraphics[width=0.7\linewidth]{kitaev.jpg}
+    \vspace{0.3cm}
+
+    \textbf{Hamiltonian:}
+    $$ H = \frac{1}{4!} \sum_{ijkl} J_{ijkl} \chi_i \chi_j \chi_k \chi_l $$
+    $\chi_i$ are Majorana fermions
+    
+    \vspace{0.3cm}
+    \textbf{Properties (large $N$):}
+    \begin{itemize}
+        \item Solvable, maximally chaotic
+        \item Emergent conformal symmetry at low energy
+        \item Holographic dual to JT gravity in AdS$_2$
+    \end{itemize}
+\end{column}
+
+% Column 3: Complex SYK Model
+\begin{column}{0.3\textwidth}
+    \centering
+    \textbf{Complex SYK Model}
+    \vspace{0.2cm} % Adjust spacing to align content
+    
+    \textbf{Hamiltonian:}
+    \begin{align*}
+        H =& \sum_{ijkl} J_{ijkl} c_i^\dagger c_j^\dagger c_k c_l \\
+        &- \mu \sum_i c_i^\dagger c_i
+    \end{align*}
+    $c_i$ are complex fermions
+    
+    \vspace{0.3cm}
+    \textbf{Properties  (large $N$):}
+    \begin{itemize}
+        \item Conserves U(1) particle number.
+        \item Allows study of charge/thermal transport.
+        \item Richer phase diagram (e.g., charged black holes).
+    \end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+\end{document}
